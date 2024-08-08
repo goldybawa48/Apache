@@ -1,11 +1,11 @@
 name: Check Apache Status
 
+
 on:
-  workflow_call:
-    inputs:
-      instance_id:
-        required: true
-        type: string
+  workflow_run:
+    workflows: ["Terraform Apply"]
+    types:
+      - completed
 
 jobs:
   check-apache:
