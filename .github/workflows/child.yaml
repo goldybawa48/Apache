@@ -17,7 +17,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: instance_ip
-          path: ./terraform
+          path: ./
 
       - name: Read IP Address
         id: read-ip
