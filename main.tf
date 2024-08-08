@@ -19,9 +19,9 @@ resource "aws_instance" "goldy" {
 }
 
 output "instance_id" {
-  value = aws_instance.instance1.id
+  value = aws_instance.goldy.id
 }
 
 output "instance_public_ip" {
-  value = aws_instance.instance1.public_ip
+  value = aws_instance.goldy.public_ip
 }
