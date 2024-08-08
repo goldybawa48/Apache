@@ -1,21 +1,36 @@
-name: Child Workflow
+name: Check Apache Status
 
 on:
   workflow_call:
+    inputs:
+      instance_id:
+        required: true
+        type: string
 
 jobs:
-  verify-apache:
+  check-apache:
+    name: Check Apache
     runs-on: ubuntu-latest
+
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Sleep
-        run: sleep 60
+    - name: Install AWS CLI
+      run: sudo apt-get install awscli -y
 
-      - name: Verify Apache is running
-        run: |
-          if systemctl status apache2 | grep "active (running)"; then
-            echo "Apache is running."
-          else
-            echo "Apache is not running."
-            exit 1
-          fi
+    - name: Get Public IP of Instance
+      id: get-ip
+      run: |
+        ip=$(aws ec2 describe-instances --instance-ids ${{ inputs.instance_id }} --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+        echo "public_ip=$ip" >> $GITHUB_ENV
+
+    - name: Add SSH Key
+      uses: webfactory/ssh-agent@v0.7.1
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Check Apache Status
+      run: |
+        ssh -o "StrictHostKeyChecking=no" ec2-user@${{ env.public_ip }} "sudo systemctl is-active apache2"
+      continue-on-error: false
