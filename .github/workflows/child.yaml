@@ -30,6 +30,5 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Check Apache Status
-      run: |
-        ssh -o "StrictHostKeyChecking=no" ec2-user@${{ env.public_ip }} "sudo systemctl is-active apache2"
+      run: ssh -o "StrictHostKeyChecking=no" ec2-user@${{ env.public_ip }} "sudo systemctl is-active apache2"
       continue-on-error: false
