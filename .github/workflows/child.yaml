@@ -1,0 +1,18 @@
+# .github/workflows/child-workflow.yml
+name: Child Workflow
+
+on:
+  workflow_call: parent.yaml
+
+jobs:
+  verify-apache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Apache is running
+        run: |
+          if systemctl status apache2 | grep "active (running)"; then
+            echo "Apache is running."
+          else
+            echo "Apache is not running."
+            exit 1
+          fi
