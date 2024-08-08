@@ -30,6 +30,5 @@ jobs:
       run: echo "instance_id=$(terraform output -raw instance_id)" >> $GITHUB_ENV
 
     - name: Trigger Child Workflow to Check Apache Status
-      uses: goldybawa48/Apache/.github/workflows/child.yaml
-      with:
-        instance_id: ${{ env.instance_id }}
+      run: |
+        gh workflow run child.yaml --repo goldybawa48/Apache --ref main --field instance_id="${{ env.instance_id }}"
