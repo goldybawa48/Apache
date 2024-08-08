@@ -2,7 +2,7 @@
 name: Child Workflow
 
 on:
-  workflow_call: parent.yaml
+  workflow_call:
 
 jobs:
   verify-apache:
