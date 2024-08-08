@@ -1,6 +1,5 @@
 name: Check Apache Status
 
-
 on:
   workflow_run:
     workflows: ["Terraform Apply"]
