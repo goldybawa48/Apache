@@ -1,4 +1,3 @@
-# .github/workflows/child-workflow.yml
 name: Child Workflow
 
 on:
@@ -8,6 +7,10 @@ jobs:
   verify-apache:
     runs-on: ubuntu-latest
     steps:
+
+      - name: Sleep
+        run: sleep 60
+
       - name: Verify Apache is running
         run: |
           if systemctl status apache2 | grep "active (running)"; then
