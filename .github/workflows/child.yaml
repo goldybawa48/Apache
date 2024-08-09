@@ -14,10 +14,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download Artifact
+        working-directory: terraform
         uses: actions/download-artifact@v3
         with:
           name: instance_ip
-          path: terraform/instance_ip.txt
+          path: ./instance_ip.txt
 
       - name: Read IP Address
         id: read-ip
