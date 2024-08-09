@@ -37,4 +37,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: instance_ip
-          path: ./instance_ip.txt
+          path: terraform/instance_ip.txt
+
+      - name: List Files in Terraform Directory
+        working-directory: terraform
+        run: ls -la
